@@ -14,13 +14,8 @@ defmodule CanasiteWeb.Router do
   end
 
   scope "/", CanasiteWeb do
-    pipe_through :browser
+    pipe_through :api
 
-    get "/", PageController, :index
+    forward("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", CanasiteWeb do
-  #   pipe_through :api
-  # end
 end
