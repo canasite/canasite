@@ -1,6 +1,4 @@
 defmodule Canasite.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
@@ -8,16 +6,10 @@ defmodule Canasite.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
       Canasite.Repo,
-      # Start the endpoint when the application starts
       CanasiteWeb.Endpoint
-      # Starts a worker by calling: Canasite.Worker.start_link(arg)
-      # {Canasite.Worker, arg},
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Canasite.Supervisor]
     Supervisor.start_link(children, opts)
   end
