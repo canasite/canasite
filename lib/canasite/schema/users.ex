@@ -1,7 +1,11 @@
 defmodule Canasite.Users do
+  @moduledoc """
+  Context that help for user manipulation.
+  """
   use Ecto.Schema
 
-  alias Canasite.Auth.Encryption
+  import Canasite.Repo
+
   alias Canasite.Schema.User
   alias Comeonin.Bcrypt
 

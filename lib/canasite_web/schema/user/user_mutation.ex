@@ -15,7 +15,7 @@ defmodule CanasiteWeb.Schema.User.Mutation do
       @desc "Password of the user."
       arg(:password, non_null(:string))
 
-      resolve(&User.Resolver.create/3)
+      resolve(&User.Resolver.create_user/3)
     end
   end
 end
