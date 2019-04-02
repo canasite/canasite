@@ -1,4 +1,4 @@
-defmodule CanasiteWeb.Schema.User.UserType do
+defmodule CanasiteWeb.Schema.User.Type do
   @moduledoc """
   Graphql Schema for user type.
   """

@@ -1,4 +1,7 @@
-defmodule CanasiteWeb.Schema.User.UserQuery do
+defmodule CanasiteWeb.Schema.User.Query do
+  @moduledoc """
+  Graphql User queries.
+  """
   use Absinthe.Schema.Notation
 
   object :user_queries do

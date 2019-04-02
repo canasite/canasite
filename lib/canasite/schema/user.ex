@@ -3,6 +3,7 @@ defmodule Canasite.Schema.User do
   import Ecto.Changeset
 
   @primary_key {:id, Ecto.ULID, autogenerate: true}
+
   schema "users" do
     field(:email, :string)
     field(:password, :string)

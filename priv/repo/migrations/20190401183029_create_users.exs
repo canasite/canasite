@@ -6,7 +6,6 @@ defmodule Canasite.Repo.Migrations.CreateUsers do
       add(:id, :binary_id, null: false, primary_key: true)
       add(:email, :string)
       add(:password, :string)
-      add(:token, :string)
 
       timestamps()
     end
