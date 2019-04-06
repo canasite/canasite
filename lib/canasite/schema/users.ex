@@ -4,10 +4,8 @@ defmodule Canasite.Users do
   """
   use Ecto.Schema
 
-  import Canasite.Repo
-
+  alias Canasite.Repo
   alias Canasite.Schema.User
-  alias Comeonin.Bcrypt
 
   def list_users do
     Repo.all(User)
@@ -31,21 +29,21 @@ defmodule Canasite.Users do
   end
 
   def delete_user(%User{} = user) do
-    Repo.soft_delete(user)
+    Repo.delete(user)
   end
 
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
 
-  def find_user_and_check_password(email, password) do
+  def user_authenticate(email, password) do
     User
     |> Repo.get_by(email: email)
     |> check_password(password)
   end
 
   defp check_password(%User{password: user_password}, password) do
-    Bcrypt.checkpw(password, user_password)
+    Bcrypt.check_pass(password, user_password)
   end
 
   defp check_password(_unvalide_user, _password), do: {:error, "invalid user"}

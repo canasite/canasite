@@ -7,10 +7,7 @@ defmodule CanasiteWeb.User.MutationTest do
     @mutation """
     mutation ($email: String!, $password: String!) {
       create_user(email: $email, password: $password) {
-        id
         email
-        password
-        token
       }
     }
     """
@@ -18,11 +15,12 @@ defmodule CanasiteWeb.User.MutationTest do
       conn =
         post(conn, "/graphql",
           query: @mutation,
-          variables: %{email: "nathan@canasite.com", password: "yolo1234"})
-      IO.puts "\n=========="
-      IO.inspect conn
+          variables: %{email: "nathan@canasite.com", password: "yolo1234"}
+        )
 
-      assert json_response(conn, 200) == %{"data" => %{"user" => []}}
+      assert json_response(conn, 200) == %{
+               "data" => %{"create_user" => %{"email" => "nathan@canasite.com"}}
+             }
     end
   end
 end

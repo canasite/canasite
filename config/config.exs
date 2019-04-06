@@ -25,6 +25,15 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configuration for Guardian
+config :canasite, CanasiteWeb.Guardian,
+  issuer: "Canasite",
+  secret_key: "IvCK5zSyNt9jaGKm1Yi+PaeXxx4lSxXZ0TVs+HMUUb8sog1iBxpBhM+XeWWCwPmn",
+  allowed_algos: ["HS256"],
+  ttl: {30, :days},
+  allowed_drift: 2000,
+  verify_issuer: true
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

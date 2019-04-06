@@ -32,8 +32,9 @@ defmodule Canasite.MixProject do
     [
       {:absinthe, "~> 1.4.16"},
       {:absinthe_plug, "~> 1.4.6"},
-      {:ecto_sql, "~> 3.0"},
+      {:bcrypt_elixir, "~> 2.0"},
       {:comeonin, "~> 5.1.1"},
+      {:ecto_sql, "~> 3.0"},
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"},
       {:jason, "~> 1.0"},

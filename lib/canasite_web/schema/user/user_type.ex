@@ -5,9 +5,8 @@ defmodule CanasiteWeb.Schema.User.Type do
   use Absinthe.Schema.Notation
 
   object :user do
-    field(:id, non_null(:ulid))
     field(:email, non_null(:string))
     field(:password, non_null(:string))
-    field(:token, non_null(:string))
+    field(:token, :string)
   end
 end
