@@ -16,4 +16,10 @@ defmodule CanasiteWeb.Router do
 
     forward("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
   end
+
+  scope "/public" do
+    pipe_through :api
+
+    post("/graphql", Absinthe.Plug, schema: CanasiteWeb.PublicSchema)
+  end
 end

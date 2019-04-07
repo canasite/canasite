@@ -13,7 +13,7 @@ defmodule CanasiteWeb.User.MutationTest do
     """
     test "With good params", %{conn: conn} do
       conn =
-        post(conn, "/graphql",
+        post(conn, "/public/graphql",
           query: @mutation,
           variables: %{email: "nathan@canasite.com", password: "yolo1234"}
         )

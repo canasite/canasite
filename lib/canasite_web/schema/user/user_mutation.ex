@@ -8,6 +8,10 @@ defmodule CanasiteWeb.Schema.User.Mutation do
   alias CanasiteWeb.Schema.User
 
   object :user_mutations do
+  end
+
+  @desc "Create user without authentification."
+  object :user_public_mutations do
     @desc "Create a user"
     field(:create_user, type: :user) do
       @desc "Valide email address of the user."
