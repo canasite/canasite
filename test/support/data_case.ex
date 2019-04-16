@@ -13,23 +13,24 @@ defmodule Canasite.DataCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.{Adapters.SQL.Sandbox, Changeset}
 
   using do
     quote do
       alias Canasite.Repo
 
       import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
+      import Changeset
+      import Query
       import Canasite.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Canasite.Repo)
+    :ok = Sandbox.checkout(Canasite.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Canasite.Repo, {:shared, self()})
+      Sandbox.mode(Canasite.Repo, {:shared, self()})
     end
 
     :ok
@@ -44,7 +45,7 @@ defmodule Canasite.DataCase do
 
   """
   def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+    Changeset.traverse_errors(changeset, fn {message, opts} ->
       Enum.reduce(opts, message, fn {key, value}, acc ->
         String.replace(acc, "%{#{key}}", to_string(value))
       end)

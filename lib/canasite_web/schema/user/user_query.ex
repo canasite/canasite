@@ -4,7 +4,7 @@ defmodule CanasiteWeb.Schema.User.Query do
   """
   use Absinthe.Schema.Notation
 
-  alias CanasiteWeb.Schema.User
+  alias CanasiteWeb.Schema.User.Resolver
 
   object :user_queries do
     @desc "Fetch userfull informations about user profil."
@@ -12,7 +12,7 @@ defmodule CanasiteWeb.Schema.User.Query do
       @desc "Valide access token."
       arg(:token, non_null(:string))
 
-      resolve(&User.Resolver.get_user/3)
+      resolve(&Resolver.get_user/3)
     end
   end
 end

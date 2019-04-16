@@ -3,8 +3,8 @@ defmodule CanasiteWeb.Schema.User.Resolver do
   Graphql User resolver module.
   """
 
-  alias Canasite.Users
   alias Canasite.Schema.User
+  alias Canasite.Users
   alias CanasiteWeb.Schema.Common.ErrorResolver
 
   def create_user(_root, args, _context) do

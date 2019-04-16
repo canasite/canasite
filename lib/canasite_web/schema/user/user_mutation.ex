@@ -5,7 +5,7 @@ defmodule CanasiteWeb.Schema.User.Mutation do
 
   use Absinthe.Schema.Notation
 
-  alias CanasiteWeb.Schema.User
+  alias CanasiteWeb.Schema.User.Resolver
 
   @desc "Mutation when token is required."
   object :user_mutations do
@@ -20,7 +20,7 @@ defmodule CanasiteWeb.Schema.User.Mutation do
       @desc "Password of the user."
       arg(:password, non_null(:string))
 
-      resolve(&User.Resolver.create_user/3)
+      resolve(&Resolver.create_user/3)
     end
   end
 end

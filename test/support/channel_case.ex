@@ -14,6 +14,7 @@ defmodule CanasiteWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -26,10 +27,10 @@ defmodule CanasiteWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Canasite.Repo)
+    :ok = Sandbox.checkout(Canasite.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Canasite.Repo, {:shared, self()})
+      Sandbox.mode(Canasite.Repo, {:shared, self()})
     end
 
     :ok
