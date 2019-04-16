@@ -4,8 +4,8 @@ defmodule CanasiteWeb.Schema do
   """
   use Absinthe.Schema
 
-  import_types(Absinthe.Type.Custom)
   import_types(Absinthe.Plug.Types)
+  import_types(Absinthe.Type.Custom)
   import_types(__MODULE__.Common.CustomTypes)
   import_types(__MODULE__.User.Type)
   import_types(__MODULE__.User.Query)

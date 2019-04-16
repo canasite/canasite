@@ -7,13 +7,14 @@ defmodule CanasiteWeb.Schema.User.Mutation do
 
   alias CanasiteWeb.Schema.User
 
+  @desc "Mutation when token is required."
   object :user_mutations do
   end
 
-  @desc "Create user without authentification."
+  @desc "Mutation without token."
   object :user_public_mutations do
-    @desc "Create a user"
-    field(:create_user, type: :user) do
+    @desc "Create a user."
+    field :create_user, :user do
       @desc "Valide email address of the user."
       arg(:email, non_null(:string))
       @desc "Password of the user."

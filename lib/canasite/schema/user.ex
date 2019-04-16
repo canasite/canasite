@@ -11,6 +11,7 @@ defmodule Canasite.Schema.User do
   @primary_key {:id, Ecto.ULID, autogenerate: true}
   @email_regex ~r/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
   @required_fields [:email, :password]
+  @error_email_format "Wrong email format"
 
   schema "users" do
     field(:email, :string)
@@ -38,7 +39,7 @@ defmodule Canasite.Schema.User do
     if Regex.match?(@email_regex, email) do
       []
     else
-      [{:email, "Wrong email format"}]
+      [email: @error_email_format]
     end
   end
 end
