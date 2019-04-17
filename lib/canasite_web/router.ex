@@ -4,11 +4,14 @@ defmodule CanasiteWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
 
-    # plug(Guardian.Plug.Pipeline,
-    #   module: CanasiteWeb.Guardian
-    # )
-    # plug(Guardian.Plug.VerifyHeader, realm: "Token")
-    # plug(Guardian.Plug.LoadResource, allow_blank: true)
+    plug(
+      Guardian.Plug.Pipeline,
+      error_handler: Canasite.Authentification.ErrorHandler,
+      module: Canasite.Authentification.Guardian
+    )
+
+    plug(Guardian.Plug.VerifyHeader, realm: "Token")
+    plug(Guardian.Plug.LoadResource, allow_blank: true)
   end
 
   scope "/" do

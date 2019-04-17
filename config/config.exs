@@ -26,9 +26,9 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 # Configuration for Guardian
-config :canasite, CanasiteWeb.Guardian,
+config :canasite, Canasite.Authentification.Guardian,
   issuer: "Canasite",
-  secret_key: "IvCK5zSyNt9jaGKm1Yi+PaeXxx4lSxXZ0TVs+HMUUb8sog1iBxpBhM+XeWWCwPmn",
+  secret_key: "OSUcbyNMjpZuIE/DTGnErbDseY+vQ9vK/w0JAHrUizmYTWprGmzRhBd4UHgNUU4r",
   allowed_algos: ["HS256"],
   ttl: {30, :days},
   allowed_drift: 2000,
