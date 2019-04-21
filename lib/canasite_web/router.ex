@@ -14,8 +14,12 @@ defmodule CanasiteWeb.Router do
     plug(Guardian.Plug.LoadResource, allow_blank: true)
   end
 
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/" do
-    pipe_through :api
+    pipe_through [:api, :ensure_auth]
 
     forward("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
   end

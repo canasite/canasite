@@ -17,7 +17,7 @@ defmodule CanasiteWeb.Schema.User.Resolver do
     %{email: _email, password: _password} = args
 
     with {:ok, %User{} = user} <- Users.create_user(args),
-         {:ok, token, _claims} <- Guardian.encode_and_sign(user, %{}, token_type: :token) do
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user, %{}, ttl: {2, :weeks}) do
       result =
         user
         |> Map.from_struct()
@@ -29,6 +29,9 @@ defmodule CanasiteWeb.Schema.User.Resolver do
     end
   end
 
-  def get_user(_root, _args, _context) do
+  def get_user(_root, args, _context) do
+    IO.puts("\n==========\n\n")
+    IO.inspect(args)
+    IO.puts("\n\n==========\n")
   end
 end
