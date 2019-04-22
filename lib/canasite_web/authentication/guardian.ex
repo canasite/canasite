@@ -1,4 +1,4 @@
-defmodule Canasite.Authentification.Guardian do
+defmodule CanasiteWeb.Authentification.Guardian do
   @moduledoc """
   Guardian implementation.
 
@@ -8,9 +8,12 @@ defmodule Canasite.Authentification.Guardian do
   """
   use Guardian, otp_app: :canasite
 
+  alias Canasite.Schema.User
+  alias Canasite.Users
+
   @impl true
-  def subject_for_token(resource, _claims) do
-    sub = to_string(resource.id)
+  def subject_for_token(%User{id: id}, _claims) do
+    sub = to_string(id)
     {:ok, sub}
   end
 
@@ -20,17 +23,16 @@ defmodule Canasite.Authentification.Guardian do
   end
 
   @impl true
-  def resource_from_claims(claims) do
-    # Here we'll look up our resource from the claims, the subject can be
-    # found in the `"sub"` key. In `above subject_for_token/2` we returned
-    # the resource id so here we'll rely on that to look it up.
-    id = claims["sub"]
-    resource = MyApp.get_resource_by_id(id)
-    {:ok, resource}
+  def resource_from_claims(%{"sub" => user_id}) do
+    with %User{} = user <- Users.get_user(user_id) do
+      {:ok, user}
+    else
+      error -> {:error, :resource_not_found}
+    end
   end
 
   @impl true
   def resource_from_claims(_claims) do
-    {:error, :reason_for_error}
+    {:error, :wrong_token}
   end
 end

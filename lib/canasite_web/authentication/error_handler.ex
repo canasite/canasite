@@ -1,4 +1,4 @@
-defmodule Canasite.Authentification.ErrorHandler do
+defmodule CanasiteWeb.Authentification.ErrorHandler do
   use CanasiteWeb, :controller
 
   @moduledoc """

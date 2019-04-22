@@ -3,7 +3,7 @@ defmodule CanasiteWeb.Schema.User.Resolver do
   Graphql User resolver module.
   """
 
-  alias Canasite.Authentification.Guardian
+  alias CanasiteWeb.Authentification.Guardian
   alias Canasite.Schema.User
   alias Canasite.Users
   alias CanasiteWeb.Schema.Common.ErrorResolver
@@ -29,9 +29,9 @@ defmodule CanasiteWeb.Schema.User.Resolver do
     end
   end
 
-  def get_user(_root, args, _context) do
-    IO.puts("\n==========\n\n")
-    IO.inspect(args)
-    IO.puts("\n\n==========\n")
+  def get_user(_root, _args, context) do
+    %{context: %{current_user: user}} = context
+
+    {:ok, user}
   end
 end

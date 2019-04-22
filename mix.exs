@@ -46,6 +46,7 @@ defmodule Canasite.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:ecto_ulid, "~> 0.2.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:ex_machina, "~> 2.3", only: :test},
       {:credo, "~> 0.9.1", only: [:dev, :test], runtime: false}
     ]
   end

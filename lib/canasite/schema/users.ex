@@ -16,6 +16,11 @@ defmodule Canasite.Users do
     |> Repo.get!(id)
   end
 
+  def get_user(id) do
+    User
+    |> Repo.get(id)
+  end
+
   def create_user(attrs \\ %{}) do
     %User{}
     |> User.changeset(attrs)
