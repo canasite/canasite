@@ -16,29 +16,24 @@ defmodule CanasiteWeb.User.MutationTest do
     }
     """
     test "With good params", %{conn: conn} do
-      conn =
-        post(
-          conn,
-          @public_endpoint,
-          query: @mutation,
-          variables: %{email: "nathan@canasite.com", password: "yolo1234"}
-        )
-
-      assert json_response(conn, @status_ok) == %{
+      assert conn
+             |> post(@public_endpoint,
+               query: @mutation,
+               variables: %{email: "nathan@canasite.com", password: "yolo1234"}
+             )
+             |> json_response(@status_ok) == %{
                "data" => %{"create_user" => %{"email" => "nathan@canasite.com"}}
              }
     end
 
     test "Without wrong email format", %{conn: conn} do
-      conn =
-        post(
-          conn,
-          @public_endpoint,
-          query: @mutation,
-          variables: %{email: "nathan.canasite.com", password: "yolo1234"}
-        )
-
-      assert json_response(conn, @status_ok) == %{
+      assert conn
+             |> post(
+               @public_endpoint,
+               query: @mutation,
+               variables: %{email: "nathan.canasite.com", password: "yolo1234"}
+             )
+             |> json_response(@status_ok) == %{
                "data" => %{"create_user" => nil},
                "errors" => [
                  %{

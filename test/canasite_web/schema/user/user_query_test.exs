@@ -27,28 +27,32 @@ defmodule CanasiteWeb.User.QueryTest do
   """
   describe "Get user" do
     test "When no user is set", %{conn: conn} do
-      conn = get(conn, @endpoint_graphql, query: @query)
-
-      assert json_response(conn, @status_unauthorized) == %{"error" => "Not Authenticated"}
+      assert conn
+             |> get(@endpoint_graphql, query: @query)
+             |> json_response(@status_unauthorized) == %{"error" => "Not Authenticated"}
     end
 
     test "When we created our user before", %{auth_conn: auth_conn, user: %{email: email}} do
-      conn = get(auth_conn, @endpoint_graphql, query: @query)
-
-      assert json_response(conn, @status_ok) == %{
+      assert auth_conn
+             |> get(@endpoint_graphql, query: @query)
+             |> json_response(@status_ok) == %{
                "data" => %{"me" => %{"email" => email}}
              }
     end
 
     test "Try to change informations in token", %{conn: conn, token: token} do
       [header, payload, signature] = String.split(token, ".")
-      IO.puts "\n==========\n\n"
-      IO.inspect header
-      IO.inspect payload
-      IO.inspect signature
-      IO.inspect Base.url_decode64(payload)
-      IO.puts "\n\n==========\n"
+      {:ok, decoded_payload} = Base.decode64(payload, padding: false)
 
+      hacked_payload =
+        decoded_payload
+        |> String.replace("Canasite", "Hack")
+        |> Base.encode64(padding: false)
+
+      assert conn
+             |> put_req_header("authorization", "Bearer #{header}.#{hacked_payload}.#{signature}")
+             |> get(@endpoint_graphql, query: @query)
+             |> json_response(@status_unauthorized)
     end
   end
 end
