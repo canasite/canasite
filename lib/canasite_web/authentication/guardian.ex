@@ -8,8 +8,7 @@ defmodule CanasiteWeb.Authentification.Guardian do
   """
   use Guardian, otp_app: :canasite
 
-  alias Canasite.Schema.User
-  alias Canasite.Users
+  alias Canasite.Schema.{User, Users}
 
   @impl true
   def subject_for_token(%User{id: id}, _claims) do
@@ -24,10 +23,10 @@ defmodule CanasiteWeb.Authentification.Guardian do
 
   @impl true
   def resource_from_claims(%{"sub" => user_id}) do
-    with %User{} = user <- Users.get_user(user_id) do
+    with %User{} = user <- Users.get(user_id) do
       {:ok, user}
     else
-      error -> {:error, :resource_not_found}
+      error -> {:error, error}
     end
   end
 

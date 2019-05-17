@@ -1,45 +1,11 @@
-defmodule Canasite.Users do
+defmodule Canasite.Schema.Users do
   @moduledoc """
   Context that help for user manipulation.
   """
-  use Ecto.Schema
+  use EctoCrux, module: Canasite.Schema.User
 
   alias Canasite.Repo
   alias Canasite.Schema.User
-
-  def list_users do
-    Repo.all(User)
-  end
-
-  def get_user!(id) do
-    User
-    |> Repo.get!(id)
-  end
-
-  def get_user(id) do
-    User
-    |> Repo.get(id)
-  end
-
-  def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  def update_user(%User{} = user, attrs) do
-    user
-    |> User.changeset(attrs)
-    |> Repo.update()
-  end
-
-  def delete_user(%User{} = user) do
-    Repo.delete(user)
-  end
-
-  def change_user(%User{} = user) do
-    User.changeset(user, %{})
-  end
 
   def user_authenticate(email, password) do
     User

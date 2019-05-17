@@ -25,6 +25,7 @@ defmodule Canasite.Schema.User do
     user
     |> cast(attrs, @required_fields)
     |> validate_required(@required_fields)
+    |> unique_constraint(:email)
     |> validate_change(:email, &validate_email_format/2)
     |> password_hash()
   end

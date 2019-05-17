@@ -4,8 +4,7 @@ defmodule CanasiteWeb.Schema.User.Resolver do
   """
 
   alias CanasiteWeb.Authentification.Guardian
-  alias Canasite.Schema.User
-  alias Canasite.Users
+  alias Canasite.Schema.{User, Users}
   alias CanasiteWeb.Schema.Common.ErrorResolver
 
   @doc """
@@ -16,7 +15,7 @@ defmodule CanasiteWeb.Schema.User.Resolver do
     # Check parameters.
     %{email: _email, password: _password} = args
 
-    with {:ok, %User{} = user} <- Users.create_user(args),
+    with {:ok, %User{} = user} <- Users.create(args),
          {:ok, token, _claims} <- Guardian.encode_and_sign(user, %{}, ttl: {2, :weeks}) do
       result =
         user

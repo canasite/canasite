@@ -4,7 +4,8 @@ defmodule CanasiteWeb.User.MutationTest do
   use CanasiteWeb.ConnCase, async: true
 
   @status_ok 200
-  @bad_request 400
+  @bad_request_status 400
+  @bad_request "BAD REQUEST"
   @public_endpoint "/public/graphql"
 
   describe "Create user" do
@@ -40,7 +41,8 @@ defmodule CanasiteWeb.User.MutationTest do
                    "locations" => [%{"column" => 0, "line" => 2}],
                    "message" => %{"email" => ["Wrong email format"]},
                    "path" => ["create_user"],
-                   "status" => @bad_request
+                   "status" => @bad_request_status,
+                   "type" => @bad_request
                  }
                ]
              }

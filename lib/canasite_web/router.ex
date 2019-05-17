@@ -23,13 +23,11 @@ defmodule CanasiteWeb.Router do
 
   scope "/" do
     pipe_through [:api, :restricted]
-
-    post("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
+    forward("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
   end
 
   scope "/public" do
     pipe_through :api
-
     post("/graphql", Absinthe.Plug, schema: CanasiteWeb.SchemaPublic)
   end
 end

@@ -1,11 +1,7 @@
 defmodule CanasiteWeb.Authentification.SetContext do
-  @behavious Plug
-
   @moduledoc """
   Set current user
   """
-
-  import Plug.Conn
   alias Absinthe.Plug
 
   def init(opts), do: opts
