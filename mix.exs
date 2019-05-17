@@ -35,6 +35,7 @@ defmodule Canasite.MixProject do
       {:bcrypt_elixir, "~> 2.0"},
       {:comeonin, "~> 5.1.1"},
       {:ecto_sql, "~> 3.0"},
+      {:cors_plug, "~> 2.0"},
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"},
       {:jason, "~> 1.0"},

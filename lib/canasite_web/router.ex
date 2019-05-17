@@ -2,6 +2,7 @@ defmodule CanasiteWeb.Router do
   use CanasiteWeb, :router
 
   pipeline :api do
+    plug(CORSPlug, origin: "*")
     plug :accepts, ["json"]
 
     plug(
@@ -23,7 +24,7 @@ defmodule CanasiteWeb.Router do
   scope "/" do
     pipe_through [:api, :restricted]
 
-    forward("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
+    post("/graphql", Absinthe.Plug, schema: CanasiteWeb.Schema)
   end
 
   scope "/public" do
