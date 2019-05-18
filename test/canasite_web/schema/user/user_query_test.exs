@@ -66,9 +66,9 @@ defmodule CanasiteWeb.User.QueryTest do
                    }
                  }
                },
-        response)
-      && bit_size(response["data"]["me"]["token"]) > 0
-      && token != response["data"]["me"]["token"]
+               response
+             ) && bit_size(response["data"]["me"]["token"]) > 0 &&
+               token != response["data"]["me"]["token"]
     end
   end
 end

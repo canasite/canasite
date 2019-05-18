@@ -8,7 +8,6 @@ defmodule CanasiteWeb.User.MutationTest do
   @bad_request_status 400
   @bad_request "BAD REQUEST"
   @public_endpoint "/public/graphql"
-  # @endpoint_graphql "/graphql"
 
   describe "Create user" do
     @mutation """
