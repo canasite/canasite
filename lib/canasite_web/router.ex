@@ -2,7 +2,6 @@ defmodule CanasiteWeb.Router do
   use CanasiteWeb, :router
 
   pipeline :api do
-    plug(CORSPlug, origin: "*")
     plug :accepts, ["json"]
 
     plug(

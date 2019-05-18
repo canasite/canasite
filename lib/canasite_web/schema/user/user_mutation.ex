@@ -22,5 +22,15 @@ defmodule CanasiteWeb.Schema.User.Mutation do
 
       resolve(&Resolver.create_user/3)
     end
+
+    @desc "Refresh token user."
+    field :refresh_token, :token do
+      @desc "Valide email address of the user."
+      arg(:email, non_null(:string))
+      @desc "Password of the user."
+      arg(:password, non_null(:string))
+
+      resolve(&Resolver.refresh_token/3)
+    end
   end
 end

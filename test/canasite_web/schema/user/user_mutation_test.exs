@@ -2,11 +2,13 @@ defmodule CanasiteWeb.User.MutationTest do
   @moduledoc false
 
   use CanasiteWeb.ConnCase, async: true
+  use CanasiteWeb.AuthCase
 
   @status_ok 200
   @bad_request_status 400
   @bad_request "BAD REQUEST"
   @public_endpoint "/public/graphql"
+  # @endpoint_graphql "/graphql"
 
   describe "Create user" do
     @mutation """
@@ -46,6 +48,39 @@ defmodule CanasiteWeb.User.MutationTest do
                  }
                ]
              }
+    end
+  end
+
+  describe "Refresh token" do
+    @mutation """
+    mutation ($email: String!, $password: String!) {
+      refresh_token(email: $email, password: $password) {
+        token
+      }
+    }
+    """
+    test "With good params", %{conn: conn, token: _token, user: user} do
+      %{email: email, password: password} = user
+
+      response =
+        conn
+        |> post(
+          @public_endpoint,
+          query: @mutation,
+          variables: %{email: email, password: password}
+        )
+        |> json_response(@status_ok)
+
+      assert match?(
+               %{
+                 "data" => %{
+                   "refresh_token" => %{
+                     "token" => _token
+                   }
+                 }
+               },
+               response
+             ) && bit_size(response["data"]["refresh_token"]["token"]) > 0
     end
   end
 end

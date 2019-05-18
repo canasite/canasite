@@ -2,21 +2,11 @@ defmodule CanasiteWeb.User.QueryTest do
   @moduledoc false
 
   use CanasiteWeb.ConnCase, async: true
-
-  import Canasite.Factory
-
-  alias CanasiteWeb.Schema.User.Resolver
+  use CanasiteWeb.AuthCase
 
   @endpoint_graphql "/graphql"
   @status_unauthorized 401
   @status_ok 200
-
-  setup %{conn: conn} do
-    {:ok, %{token: access_token} = user} = Resolver.create_user(nil, params_for(:user), nil)
-    auth_conn = put_req_header(conn, "authorization", "Bearer #{access_token}")
-
-    %{auth_conn: auth_conn, user: user, token: access_token}
-  end
 
   @query """
   query {
