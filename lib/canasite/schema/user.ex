@@ -30,17 +30,18 @@ defmodule Canasite.Schema.User do
     |> password_hash()
   end
 
-  defp password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, password: Bcrypt.hash_pwd_salt(password))
-  end
+  defp password_hash(%Changeset{valid?: true, changes: %{password: password}} = changeset),
+    do: change(changeset, password: Bcrypt.hash_pwd_salt(password))
 
-  defp password_hash(changeset), do: changeset
+  defp password_hash(changeset),
+    do: Logger.error("Error, unexpected changeset: #{inspect(changeset)}")
 
   defp validate_email_format(:email, email) do
-    if Regex.match?(@email_regex, email) do
-      []
-    else
-      [email: @error_email_format]
-    end
+    @email_regex
+    |> Regex.match?(email)
+    |> email_format_response()
   end
+
+  defp email_format_response(true), do: []
+  defp email_format_response(_), do: [email: @error_email_format]
 end
