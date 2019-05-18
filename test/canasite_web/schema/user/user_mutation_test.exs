@@ -13,7 +13,7 @@ defmodule CanasiteWeb.User.MutationTest do
   describe "Create user" do
     @mutation """
     mutation ($email: String!, $password: String!) {
-      create_user(email: $email, password: $password) {
+      signup(email: $email, password: $password) {
         email
       }
     }
@@ -25,7 +25,7 @@ defmodule CanasiteWeb.User.MutationTest do
                variables: %{email: "nathan@canasite.com", password: "yolo1234"}
              )
              |> json_response(@status_ok) == %{
-               "data" => %{"create_user" => %{"email" => "nathan@canasite.com"}}
+               "data" => %{"signup" => %{"email" => "nathan@canasite.com"}}
              }
     end
 
@@ -37,12 +37,12 @@ defmodule CanasiteWeb.User.MutationTest do
                variables: %{email: "nathan.canasite.com", password: "yolo1234"}
              )
              |> json_response(@status_ok) == %{
-               "data" => %{"create_user" => nil},
+               "data" => %{"signup" => nil},
                "errors" => [
                  %{
                    "locations" => [%{"column" => 0, "line" => 2}],
                    "message" => %{"email" => ["Wrong email format"]},
-                   "path" => ["create_user"],
+                   "path" => ["signup"],
                    "status" => @bad_request_status,
                    "type" => @bad_request
                  }
@@ -54,7 +54,7 @@ defmodule CanasiteWeb.User.MutationTest do
   describe "Refresh token" do
     @mutation """
     mutation ($email: String!, $password: String!) {
-      refresh_token(email: $email, password: $password) {
+      login(email: $email, password: $password) {
         token
       }
     }
@@ -74,13 +74,13 @@ defmodule CanasiteWeb.User.MutationTest do
       assert match?(
                %{
                  "data" => %{
-                   "refresh_token" => %{
+                   "login" => %{
                      "token" => _token
                    }
                  }
                },
                response
-             ) && bit_size(response["data"]["refresh_token"]["token"]) > 0
+             ) && bit_size(response["data"]["login"]["token"]) > 0
     end
   end
 end

@@ -14,7 +14,7 @@ defmodule CanasiteWeb.Schema.User.Mutation do
   @desc "Mutation without token."
   object :user_public_mutations do
     @desc "Create a user."
-    field :create_user, :user do
+    field :signup, :user do
       @desc "Valide email address of the user."
       arg(:email, non_null(:string))
       @desc "Password of the user."
@@ -23,8 +23,8 @@ defmodule CanasiteWeb.Schema.User.Mutation do
       resolve(&Resolver.create_user/3)
     end
 
-    @desc "Refresh token user."
-    field :refresh_token, :token do
+    @desc "Login user."
+    field :login, :token do
       @desc "Valide email address of the user."
       arg(:email, non_null(:string))
       @desc "Password of the user."
