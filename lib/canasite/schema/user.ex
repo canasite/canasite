@@ -4,7 +4,7 @@ defmodule Canasite.Schema.User do
   """
 
   alias Ecto.Changeset
-
+require Logger
   use Ecto.Schema
   import Ecto.Changeset
 
