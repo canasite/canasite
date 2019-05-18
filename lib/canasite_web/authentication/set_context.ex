@@ -9,7 +9,8 @@ defmodule CanasiteWeb.Authentification.SetContext do
   def call(conn, _opts) do
     Plug.put_options(conn,
       context: %{
-        current_user: Guardian.Plug.current_resource(conn)
+        current_user: Guardian.Plug.current_resource(conn),
+        current_token: Guardian.Plug.current_token(conn)
       }
     )
   end

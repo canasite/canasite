@@ -35,9 +35,12 @@ defmodule CanasiteWeb.Schema.User.Resolver do
   """
   def get_user(_root, _args, context) do
     Logger.info("Get User Resolver")
-    %{context: %{current_user: user}} = context
 
-    {:ok, user}
+    with %{context: %{current_user: user}} <- context do
+      {:ok, user}
+    else
+      error -> ErrorResolver.parse(error)
+    end
   end
 
   @doc """
@@ -49,6 +52,20 @@ defmodule CanasiteWeb.Schema.User.Resolver do
     with {:ok, %User{} = user} <- Users.user_authenticate(email, password),
          {:ok, token, _claims} <- generate_token(user) do
       {:ok, %{token: token}}
+    else
+      error -> ErrorResolver.parse(error)
+    end
+  end
+
+  @doc """
+  Using the previous token, generate a new one.
+  """
+  def get_and_refresh_token(_root, _args, context) do
+    Logger.info("Get and Refresh Token Resolver")
+
+    with %{context: %{current_token: old_token}} <- context,
+         {:ok, _old_token, {new_token, _claims}} <- Guardian.refresh(old_token) do
+      {:ok, new_token}
     else
       error -> ErrorResolver.parse(error)
     end

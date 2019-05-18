@@ -44,5 +44,31 @@ defmodule CanasiteWeb.User.QueryTest do
              |> get(@endpoint_graphql, query: @query)
              |> json_response(@status_unauthorized)
     end
+
+    @query """
+    query {
+      me {
+        token
+      }
+    }
+    """
+    test "Try to refresh token", %{auth_conn: conn, token: token} do
+      response =
+        conn
+        |> get(@endpoint_graphql, query: @query)
+        |> json_response(@status_ok)
+
+      assert match?(
+               %{
+                 "data" => %{
+                   "me" => %{
+                     "token" => _token
+                   }
+                 }
+               },
+        response)
+      && bit_size(response["data"]["me"]["token"]) > 0
+      && token != response["data"]["me"]["token"]
+    end
   end
 end
